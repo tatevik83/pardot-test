@@ -60,6 +60,8 @@ public class AppTest extends TestCase
     	driver.get(URL);
     	
     	login(driver);
+    	
+    	
     	String name = "11tatevik_" + UUID.randomUUID().toString();
     	//String name = "tatevik_81b172e9-42cb-489c-a9ca-98b3fdc49c45";
         
@@ -96,6 +98,7 @@ public class AppTest extends TestCase
         navigateToEmails(driver);
         createEmail(driver, name);
 
+        logout(driver);
     	} catch (Exception x) {
     		Assert.fail("Unexpected error occured: " + x.getMessage());
     	}
@@ -130,6 +133,16 @@ public class AppTest extends TestCase
         
         // wait for the header to turn to Lists
         waitForHeader(driver, "h4", "Basic Email Information");
+    }
+    
+    private void logout(WebDriver driver) {
+    	Actions actions = new Actions(driver);
+        WebElement userIcon = driver.findElement(By.className("icon-user"));
+        actions.moveToElement(userIcon).build().perform();
+        
+        WebElement subLink = driver.findElement(By.className("icon-signout"));
+        actions.moveToElement(subLink).click(); 
+        actions.perform(); 
     }
     
     private void navigateToProspects(WebDriver driver) {
